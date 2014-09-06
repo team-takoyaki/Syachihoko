@@ -14,3 +14,14 @@ $./syc collect tmp/access.log
 /favicon.ico:2
 /clientaccesspolicy.xml:1
 ```
+
+### リポジトリの操作
+
+#### メインのリポジトリでpull, pushする
+```
+$syc pull
+```
+
+```
+$sync push
+```

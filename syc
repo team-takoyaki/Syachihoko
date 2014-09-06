@@ -2,6 +2,8 @@
 
 require './lib/Syachihoko.rb'
 
+WEBAPP_PATH='/home/isucon/webapp'
+
 syc = Syachihoko.new
 
 cmd = ARGV[0]
@@ -11,6 +13,16 @@ when "collect"
   syc.collect(filename).each{|a|
       puts "#{a[0]}:#{a[1]}"
   }
+when "pull"
+  change_dir = "cd #{WEBAPP_PATH}"
+  system(change_dir)
+  git_pull = "git pull origin master"
+  system(git_pull)
+when "push"
+  change_dir = "cd #{WEBAPP_PATH}"
+  system(change_dir)
+  git_push = "git push origin master"
+  system(git_push)
 else
   puts "command not found!!!!"
 end
