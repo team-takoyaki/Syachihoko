@@ -24,11 +24,11 @@ $syc pull
 ```
 
 ```
-$sync push
+$syc push
 ```
 
 ### ベンチマークをとる
 
 ```
-$sync bench
+$syc bench
 ```
