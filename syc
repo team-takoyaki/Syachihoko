@@ -10,8 +10,10 @@ cmd = ARGV[0]
 case cmd
 when "collect"
   filename = ARGV[1]
+  i = 0
   syc.collect(filename).each{|a|
-      puts "#{a[0]}:#{a[1]}"
+      i += 1
+    puts "#{i}:#{a[0]}:#{a[1]}"
   }
 when "pull"
   change_dir = "cd #{WEBAPP_PATH}"
@@ -23,6 +25,9 @@ when "push"
   system(change_dir)
   git_push = "git push origin master"
   system(git_push)
+when "bench"
+  bench = "isucon3 benchmark"
+  system(bench)
 else
   puts "command not found!!!!"
 end
