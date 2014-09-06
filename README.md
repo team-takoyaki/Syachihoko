@@ -4,7 +4,7 @@ Syachihoko@ISUCON 2014
 ### アクセス数の集計をする
 
 ```
-$./syc collect tmp/access.log
+$syc collect tmp/access.log
 ```
 
 ```
@@ -20,9 +20,15 @@ $./syc collect tmp/access.log
 
 #### メインのリポジトリでpull, pushする
 ```
-$./syc pull
+$syc pull
 ```
 
 ```
-$./sync push
+$sync push
+```
+
+### ベンチマークをとる
+
+```
+$sync bench
 ```
