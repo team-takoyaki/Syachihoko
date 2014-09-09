@@ -16,6 +16,16 @@ var executableCommands map[string]string = map[string]string{
 	"bench": "isucon3 benchmark",
 }
 
+func main() {
+	var subCommand string = ""
+	if len(os.Args) == 2 {
+		subCommand = os.Args[1]
+	} else {
+		subCommand = "info"
+	}
+	execute(subCommand)
+}
+
 func getCommand(a string) string {
 	value, ok := executableCommands[a]
 	if ok {
@@ -23,18 +33,6 @@ func getCommand(a string) string {
 	} else {
 		return ""
 	}
-}
-
-func main() {
-
-	var subCommand = ""
-	if len(os.Args) == 2 {
-		subCommand = os.Args[1]
-	} else {
-		subCommand = "info"
-	}
-
-	execute(subCommand)
 }
 
 func runCommand(s string) {
