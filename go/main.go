@@ -41,13 +41,13 @@ func runCommand(s string) {
 	parts := strings.Fields(cmdStr)
 	head := parts[0]
 	parts = parts[1:len(parts)]
-	cmd, err := exec.Command(head, parts...).Output()
+	outPut, err := exec.Command(head, parts...).Output()
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	fmt.Println(cmd)
+	fmt.Println(outPut)
 }
 
 func execute(subCommand string) {
