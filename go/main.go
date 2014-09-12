@@ -7,13 +7,28 @@ import (
 	"strings"
 )
 
-const WEBAPP_PATH = "/home/isucon/webapp"
+// 構造体で実行するコマンドとかディレクトリを定義しようかな
+// type CommandInfo struct {
+// 	execCommand   []string
+// 	commandResult string
+//  dir string
+// }
 
-var executableCommands map[string]string = map[string]string{
-	"info":  "golang",
-	"pull":  "git pull origin master",
-	"push":  "git pull origin master",
-	"bench": "isucon3 benchmark",
+var executableCommands map[string][]string = map[string][]string{
+	"help":  {"cat " + getBaseDirPath() + "/aa.txt"},
+	"pull":  {"cd " + getWebAppPath(), "git pull origin master"},
+	"push":  {"cd " + getWebAppPath(), "git pull origin master"},
+	"bench": {"cd " + getWebAppPath(), "isucon3 benchmark"},
+	"info":  {"whoami", "ls -ltr " + os.Getenv("HOME") + "/.ssh"},
+}
+
+func getBaseDirPath() string {
+	var pwdResult string = runCommand("pwd")
+	return strings.Trim(pwdResult, "\n")
+}
+
+func getWebAppPath() string {
+	return "/home/isucon/webapp"
 }
 
 func main() {
@@ -21,41 +36,47 @@ func main() {
 	if len(os.Args) == 2 {
 		subCommand = os.Args[1]
 	} else {
-		subCommand = "info"
+		subCommand = "help"
 	}
 	execute(subCommand)
 }
 
-func getCommand(a string) string {
+func execute(subCommand string) {
+	// executable_commands
+	var command []string = getCommand(subCommand)
+	var result string
+
+	// if subCommand NOT have key in executableCommands
+	if command == nil {
+		fmt.Println("Command not found !!")
+		return
+	}
+
+	for i := 0; i < len(command); i++ {
+		fmt.Printf(command[i])
+		result = runCommand(command[i])
+		fmt.Printf("%s", result)
+	}
+}
+
+func getCommand(a string) []string {
 	value, ok := executableCommands[a]
 	if ok {
 		return value
 	} else {
-		return ""
+		return nil
 	}
 }
 
-func runCommand(s string) {
-	fmt.Println(s)
-	var cmdStr string = "/usr/bin/which ls"
+func runCommand(cmdStr string) string {
 	parts := strings.Fields(cmdStr)
 	head := parts[0]
 	parts = parts[1:len(parts)]
-	outPut, err := exec.Command(head, parts...).Output()
+	command := exec.Command(head, parts...)
+	outPut, err := command.Output()
 	if err != nil {
 		fmt.Println(err)
-		return
 	}
 
-	fmt.Println(outPut)
-}
-
-func execute(subCommand string) {
-	// executable_commands
-	var command string = getCommand(subCommand)
-	if command == "" {
-		fmt.Println("Command not found !!")
-		return
-	}
-	runCommand(command)
+	return string(outPut[:])
 }
