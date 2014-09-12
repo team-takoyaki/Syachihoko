@@ -42,17 +42,18 @@ func main() {
 }
 
 func execute(subCommand string) {
-	// executable_commands
-	var command []string = getCommand(subCommand)
-	var result string
-
+	var (
+		command []string = getCommand(subCommand)
+		result  string
+		i       int
+	)
 	// if subCommand NOT have key in executableCommands
 	if command == nil {
 		fmt.Println("Command not found !!")
 		return
 	}
 
-	for i := 0; i < len(command); i++ {
+	for i = 0; i < len(command); i++ {
 		fmt.Printf(command[i])
 		result = runCommand(command[i])
 		fmt.Printf("%s", result)
@@ -60,7 +61,12 @@ func execute(subCommand string) {
 }
 
 func getCommand(a string) []string {
-	value, ok := executableCommands[a]
+	var (
+		value []string
+		ok    bool
+	)
+
+	value, ok = executableCommands[a]
 	if ok {
 		return value
 	} else {
@@ -69,11 +75,16 @@ func getCommand(a string) []string {
 }
 
 func runCommand(cmdStr string) string {
-	parts := strings.Fields(cmdStr)
-	head := parts[0]
+	var (
+		parts   []string = strings.Fields(cmdStr)
+		head    string   = parts[0]
+		outPut  []byte
+		err     error
+		command *exec.Cmd
+	)
 	parts = parts[1:len(parts)]
-	command := exec.Command(head, parts...)
-	outPut, err := command.Output()
+	command = exec.Command(head, parts...)
+	outPut, err = command.Output()
 	if err != nil {
 		fmt.Println(err)
 	}
