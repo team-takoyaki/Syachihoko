@@ -19,7 +19,6 @@ var executableCommands map[string][]string = map[string][]string{
 	"pull":  {"cd " + getWebAppPath(), "git pull origin master"},
 	"push":  {"cd " + getWebAppPath(), "git pull origin master"},
 	"bench": {"cd " + getWebAppPath(), "isucon3 benchmark"},
-	"info":  {"whoami", "ls -ltr " + os.Getenv("HOME") + "/.ssh"},
 }
 
 func getBaseDirPath() string {
