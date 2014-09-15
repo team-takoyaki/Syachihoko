@@ -28,6 +28,10 @@ when "push"
 when "bench"
   bench = "isucon3 benchmark"
   system(bench)
+when "kill"
+  process_name = ARGV[1]
+  kill_process = "kill `ps -ef | grep #{process_name} | awk '{print $2;}'`"
+  system(kill_process)
 else
   puts "command not found!!!!"
 end
